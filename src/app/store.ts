@@ -1,14 +1,11 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, Store } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { reducer } from './reducer';
+import { calcActionT, calculatorStateT, DispatchType } from './types';
 
-const templateReducer = (state: number = 0):number =>  {
-  return state;
-}
-
-export const store = configureStore({
-  reducer: {
-    default: templateReducer
-  },
-});
+export const store: Store<calculatorStateT, calcActionT> & {
+  dispatch: DispatchType
+} = configureStore({reducer, middleware: [thunk]});
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
