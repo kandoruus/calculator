@@ -2,6 +2,7 @@ export type functionObj = {
   operand1: string
   operand2: string | functionObj
   operator: string | null
+  parent: functionObj | null
 }
 
 export type calculatorStateT = {
@@ -9,8 +10,11 @@ export type calculatorStateT = {
   display: string
 };
 
-export type calcActionT = {
+export type buttonActionT = {
   type: string
-};
+  payload: string
+}
 
-export type DispatchType = (args: calcActionT) => calcActionT
+export type actionType = buttonActionT
+
+export type DispatchType = (args: actionType) => actionType

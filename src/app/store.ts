@@ -1,9 +1,9 @@
 import { configureStore, ThunkAction, Action, Store } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { reducer } from './reducer';
-import { calcActionT, calculatorStateT, DispatchType } from './types';
+import { actionType, calculatorStateT, DispatchType } from './types';
 
-export const store: Store<calculatorStateT, calcActionT> & {
+export const store: Store<calculatorStateT, actionType> & {
   dispatch: DispatchType
 } = configureStore({reducer, middleware: [thunk]});
 

@@ -1,46 +1,20 @@
-import { ZERO, ONE, TWO, EIGHT, FIVE, FOUR, NINE, SEVEN, SIX, THREE, DECIMAL, CLEAR, MULTIPLY, DIVIDE, SUBTRACT, ADD, EQUALS, BLANK } from "../helper/constants";
-import { handleOperandInput, handleOperatorInput, parseFunction } from "../helper/functions";
-import { calculatorStateT, calcActionT } from "./types";
+import { EQUALS, NUMPADBUTTON, OPERATORBUTTON, ERROR, CLEAR, INITSTATE } from "../helper/constants";
+import { handleClearAct, handleEqualsAct, handleErrorAct, handleNumPadInputAct, handleOperatorInputAct } from "../helper/functions";
+import { calculatorStateT, actionType } from "./types";
 
-const initState: calculatorStateT = {
-  func: {
-    operand1: BLANK,
-    operand2: BLANK,
-    operator: null
-  },
-  display: ZERO
-}
-
-export const reducer = (state: calculatorStateT = initState, action: calcActionT ):calculatorStateT =>  {
+export const reducer = (state: calculatorStateT = INITSTATE, action: actionType ):calculatorStateT =>  {
   switch(action.type) {
-    case ZERO:
-    case ONE:
-    case TWO:
-    case THREE:
-    case FOUR:
-    case FIVE:
-    case SIX:
-    case SEVEN:
-    case EIGHT:
-    case NINE:
-    case DECIMAL:
-      return {
-        ...state,
-        func: handleOperandInput(action.type, state.func)
-      }
+    case NUMPADBUTTON:
+      return handleNumPadInputAct(state, action.payload);
+    case OPERATORBUTTON:
+      return handleOperatorInputAct(state, action.payload);
     case CLEAR:
-      return initState;
-    case MULTIPLY:
-    case DIVIDE:
-    case ADD:
-    case SUBTRACT:
-      return {
-        ...state,
-        func: handleOperatorInput(action.type, state.func)
-      }
-    case EQUALS:
-      return parseFunction(state);
-    default: 
+      return handleClearAct();
+    case EQUALS: 
+      return handleEqualsAct(state);
+    case ERROR:
+      return handleErrorAct(state, action.payload);
+    default:
       return state;
   }
 }

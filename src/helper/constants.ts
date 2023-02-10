@@ -1,6 +1,8 @@
+import { calculatorStateT } from "../app/types";
+
 export const CLEAR:string = "AC";
 export const DIVIDE:string = "/";
-export const MULTIPLY:string = "X";
+export const MULTIPLY:string = "×";
 export const SUBTRACT:string = "-";
 export const ADD:string = "+";
 export const EQUALS:string = "=";
@@ -16,6 +18,21 @@ export const SEVEN:string = "7";
 export const EIGHT:string = "8";
 export const NINE:string = "9";
 export const BLANK:string = "";
+export const DECIMALCHAR:RegExp = /^[.\d]$/;
+export const OPERATORCHAR:RegExp = /^[+\-×\/]$/;
+export const ERROR = "ERROR";
+export const NUMPADBUTTON = "NUMPADBUTTON";
+export const OPERATORBUTTON = "OPERATORBUTTON";
+
+export const INITSTATE: calculatorStateT = {
+  func: {
+    operand1: ZERO,
+    operand2: BLANK,
+    operator: null,
+    parent: null
+  },
+  display: ZERO
+}
 
 export const buttonProps: { id: string, className: string, value: string }[] = [
   {
