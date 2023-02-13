@@ -1,15 +1,15 @@
-import { CLEAR, DECIMALCHAR, EQUALS, ERROR, NUMPADBUTTON, OPERATORBUTTON, OPERATORCHAR } from "../helper/constants";
+import { CLEAR, DECIMAL_CHAR, EQUALS, ERROR, NUMPAD_BUTTON, OPERATOR_BUTTON, OPERATOR_CHAR } from "../helper/constants";
 import { buttonActionT } from "./types";
 
 export const buttonAction = (buttonValue: string):buttonActionT => {
-  if(DECIMALCHAR.test(buttonValue)){
+  if(DECIMAL_CHAR.test(buttonValue)){
     return {
-      type: NUMPADBUTTON,
+      type: NUMPAD_BUTTON,
       payload: buttonValue,
     };
-  } else if(OPERATORCHAR.test(buttonValue)){
+  } else if(OPERATOR_CHAR.test(buttonValue)){
     return {
-      type: OPERATORBUTTON,
+      type: OPERATOR_BUTTON,
       payload: buttonValue,
     };
   } else if(CLEAR === buttonValue){

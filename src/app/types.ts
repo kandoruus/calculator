@@ -1,13 +1,11 @@
-export type functionObj = {
-  operand1: string
-  operand2: string | functionObj
-  operator: string | null
-  parent: functionObj | null
-}
+import { FunctionTree } from "../classes/FunctionTree";
 
 export type calculatorStateT = {
-  func: functionObj
+  func: FunctionTree
+  funcDisplay: string
   display: string
+  nextOp: string
+  isdisplayingResults: boolean
 };
 
 export type buttonActionT = {

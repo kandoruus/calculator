@@ -1,4 +1,5 @@
 import { calculatorStateT } from "../app/types";
+import { FunctionTree } from "../classes/FunctionTree";
 
 export const CLEAR:string = "AC";
 export const DIVIDE:string = "/";
@@ -18,20 +19,22 @@ export const SEVEN:string = "7";
 export const EIGHT:string = "8";
 export const NINE:string = "9";
 export const BLANK:string = "";
-export const DECIMALCHAR:RegExp = /^[.\d]$/;
-export const OPERATORCHAR:RegExp = /^[+\-×\/]$/;
+export const DECIMAL_CHAR:RegExp = /^[.\d]$/;
+export const NUMBER_REGEXP:RegExp = /^-?0$|^-?0[.]\d*$|^-?[1-9]\d*$|^-?[1-9]\d*[.]\d*$/;
+export const OPERATOR_CHAR:RegExp = /^[+\-×\/]$/;
 export const ERROR = "ERROR";
-export const NUMPADBUTTON = "NUMPADBUTTON";
-export const OPERATORBUTTON = "OPERATORBUTTON";
+export const NUMPAD_BUTTON = "NUMPADBUTTON";
+export const OPERATOR_BUTTON = "OPERATORBUTTON";
+export const OPERATOR_ORDER: string[] = [MULTIPLY, DIVIDE, SUBTRACT, ADD,  BLANK];
+
+
 
 export const INITSTATE: calculatorStateT = {
-  func: {
-    operand1: ZERO,
-    operand2: BLANK,
-    operator: null,
-    parent: null
-  },
-  display: ZERO
+  func: new FunctionTree(),
+  funcDisplay: BLANK,
+  display: ZERO,
+  nextOp: BLANK,
+  isdisplayingResults: false,
 }
 
 export const buttonProps: { id: string, className: string, value: string }[] = [

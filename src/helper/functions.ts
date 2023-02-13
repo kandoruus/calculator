@@ -1,37 +1,88 @@
 import { calculatorStateT } from "../app/types";
-import { DECIMAL, INITSTATE, OPERATORCHAR, ZERO } from "./constants";
+import { BLANK, DECIMAL, EQUALS, INITSTATE, NUMBER_REGEXP, OPERATOR_CHAR, SUBTRACT, ZERO } from "./constants";
 
 export const handleNumPadInputAct = (state: calculatorStateT, numPadChar: string):calculatorStateT => {
-  if(state.display === ZERO && numPadChar !== DECIMAL) {
-    //handle function/ function display
+  if(state.isdisplayingResults && numPadChar === DECIMAL) {
+    return {
+      ...state,
+      display: "0.",
+      funcDisplay: BLANK,
+      isdisplayingResults: false,
+    };
+  } else if(state.isdisplayingResults){
+    return {
+      ...state,
+      display: numPadChar,
+      funcDisplay: BLANK,
+      isdisplayingResults: false,
+    };
+  } else if (state.nextOp !== BLANK) {
+    state.func.add(state.nextOp);
+    return {
+      ...state,
+      funcDisplay: state.funcDisplay.concat(state.nextOp),
+      display: numPadChar === DECIMAL ? "-0." : state.display.concat(numPadChar),
+      nextOp: BLANK,
+    };
+  } else if(state.display === ZERO && numPadChar !== DECIMAL) {
     return {
       ...state,
       display: numPadChar
+    };
+  } else if(state.display === "-0" && numPadChar !== DECIMAL) {
+    return {
+      ...state,
+      display: SUBTRACT.concat(numPadChar),
     };
   } else if(state.display.includes(".") && numPadChar === DECIMAL) {
     return state;
-  } else if(OPERATORCHAR.test(state.display)) {
-    //handle function/ function display
+  } else if(OPERATOR_CHAR.test(state.display)) {
+    state.func.add(state.display);
     return {
       ...state,
+      funcDisplay: state.funcDisplay.concat(state.display),
       display: numPadChar
     };
   } else {
-    //handle function/ function display
     return {
       ...state,
-      display: state.display.concat(numPadChar)
+      display: state.display.concat(numPadChar),
     };
   }
   
 }
 
 export const handleOperatorInputAct = (state: calculatorStateT, OperationChar: string):calculatorStateT => {
-  //handle function/function display
-  return {
-    ...state,
-    display: OperationChar
-  };
+  if(state.isdisplayingResults) {
+    state.func.add(state.display);
+    return {
+      ...state,
+      display: OperationChar,
+      funcDisplay: state.display,
+      isdisplayingResults: false,
+      nextOp: BLANK,
+    }
+  } else if(NUMBER_REGEXP.test(state.display)) {
+    state.func.add(state.display);
+    return {
+      ...state,
+      funcDisplay: state.funcDisplay.concat(state.display),
+      display: OperationChar,
+      nextOp: BLANK,
+    };
+  } else if(OperationChar === SUBTRACT && state.nextOp === BLANK ) {
+    return {
+      ...state,
+      display: OperationChar,
+      nextOp: state.display,
+    };
+  } else {
+    return {
+      ...state,
+      display: OperationChar,
+      nextOp: BLANK,
+    };
+  }
 }
 
 export const handleClearAct = ():calculatorStateT => {
@@ -39,123 +90,22 @@ export const handleClearAct = ():calculatorStateT => {
 }
 
 export const handleEqualsAct = (state: calculatorStateT):calculatorStateT => {
-  //handle function/function display
-  const parseFunction = () => "0";
-  return {
-    ...state,
-    display: parseFunction()
-  };
+  if(state.isdisplayingResults) {
+    return state;
+  } else {
+    state.func.add(state.display);
+    const results = state.func.evaluate();
+    return {
+      ...state,
+      func: state.func.clear(),
+      display: results,
+      funcDisplay: state.funcDisplay.concat(state.display + EQUALS),
+      isdisplayingResults: true,
+    };
+  }
 }
 
 export const handleErrorAct = (state: calculatorStateT, errorMessage: string):calculatorStateT => {
   console.error(errorMessage);
   return state;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { functionObj, calculatorStateT } from "../app/types";
-// import { ZERO, DECIMAL, BLANK } from "./constants";
-
-// const updateOperandString = (inputNum: string, operandString: string): string => {
-//   if(operandString === ZERO && inputNum !== DECIMAL) {
-//     return inputNum;
-//   } else if((operandString === BLANK || operandString === ZERO) && inputNum === DECIMAL) {
-//     return ZERO + DECIMAL;
-//   } else if(inputNum === DECIMAL) {
-//     return operandString.includes(DECIMAL) ? operandString : operandString.concat(inputNum);
-//   } else {
-//     return operandString.concat(inputNum);
-//   }
-// }
-
-// const updateOperand = (inputNum: string, currentOperand: functionObj | string): functionObj | string => {
-//   if(typeof currentOperand === "string") {
-//     return updateOperandString(inputNum, currentOperand);
-//   } else {
-//     return handleOperandInput(inputNum, currentOperand);
-//   }
-// }
-
-// export const handleOperandInput = (inputNum: string, currentFunction: functionObj): functionObj => {
-//   if(currentFunction.operator) {
-//     return {
-//       ...currentFunction,
-//       operand2: updateOperand(inputNum, currentFunction.operand2)
-//     };
-//   } else {
-//     return {
-//       ...currentFunction,
-//       operand1: updateOperandString(inputNum, currentFunction.operand1)
-//     };
-//   }
-// }
-
-// const addOperatorToString = (inputOp: string, operandString: string): functionObj | string => {
-//   if(operandString === BLANK) {
-//     return operandString;
-//   } else {
-//     return {
-//       operand1: operandString,
-//       operand2: BLANK,
-//       operator: inputOp,
-//       parent: null
-//     }
-//   }
-// }
-
-// const addOperatorToOperand = (inputOp: string, currentOperand: functionObj | string): functionObj | string => {
-//   if(typeof currentOperand === "string") {
-//     return addOperatorToString(inputOp, currentOperand);
-//   } else {
-//     return handleOperatorInput(inputOp, currentOperand);
-//   }
-// }
-
-// export const handleOperatorInput = (inputOp: string, currentFunction: functionObj): functionObj => {
-//   if(currentFunction.operator) {
-//     return {
-//       ...currentFunction,
-//       operand2: addOperatorToOperand(inputOp, currentFunction.operand2)
-//     };
-//   } else {
-//     return {
-//       ...currentFunction,
-//       operator: inputOp
-//     };
-//   }
-// }
-
-// export const parseFunction = (currentState: calculatorStateT): calculatorStateT => {
-//   return {
-//     func: {
-//       operand1: BLANK,
-//       operand2: BLANK,
-//       operator: null,
-//       parent: null
-//     },
-//     display: ZERO
-//   }
-// }
-
-// export const functionToString = (func: functionObj): string => {
-//   if(func.operator) {
-//     return (typeof func.operand2 === "string") ? func.operand1.concat(func.operator, func.operand2) : func.operand1.concat(func.operator, functionToString(func.operand2));
-//   } else {
-//     return func.operand1
-//   }
-// }
