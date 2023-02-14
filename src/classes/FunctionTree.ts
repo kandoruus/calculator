@@ -1,6 +1,5 @@
-import { stringify } from "querystring";
-import { ADD, BLANK, DIVIDE, ERROR, MULTIPLY, NUMBER_REGEXP, OPERATOR_CHAR, OPERATOR_ORDER, SUBTRACT, ZERO } from "../helper/constants";
-import { FunctionNode } from "./FunctionNode";
+import { ADD, BLANK, DIVIDE, ERROR, MULTIPLY, NUMBER_REGEXP, OPERATOR_CHAR, OPERATOR_ORDER, SUBTRACT, ZERO } from "helper/constants";
+import { FunctionNode } from "classes/FunctionNode";
 
 
 export class FunctionTree {

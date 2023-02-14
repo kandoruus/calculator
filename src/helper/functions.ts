@@ -1,5 +1,5 @@
-import { calculatorStateT } from "../app/types";
-import { BLANK, DECIMAL, EQUALS, INITSTATE, NUMBER_REGEXP, OPERATOR_CHAR, SUBTRACT, ZERO } from "./constants";
+import { calculatorStateT } from "app/types";
+import { BLANK, DECIMAL, EQUALS, INITSTATE, NUMBER_REGEXP, OPERATOR_CHAR, SUBTRACT, ZERO } from "helper/constants";
 
 export const handleNumPadInputAct = (state: calculatorStateT, numPadChar: string):calculatorStateT => {
   if(state.isdisplayingResults && numPadChar === DECIMAL) {

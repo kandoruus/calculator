@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { buttonAction } from "../app/action-creators";
-import { DispatchType, calculatorStateT } from "../app/types";
-import { buttonProps } from "../helper/constants";
+import { buttonAction } from "app/action-creators";
+import { DispatchType, calculatorStateT } from "app/types";
+import { buttonProps } from "helper/constants";
 
 
 export const Calculator: React.FC = ():React.ReactElement => {

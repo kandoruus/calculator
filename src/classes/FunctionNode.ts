@@ -1,4 +1,4 @@
-import { BLANK } from "../helper/constants";
+import { BLANK } from "helper/constants";
 
 export class FunctionNode {
   value: string;

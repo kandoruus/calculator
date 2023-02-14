@@ -1,5 +1,5 @@
-import { calculatorStateT } from "../app/types";
-import { FunctionTree } from "../classes/FunctionTree";
+import { calculatorStateT } from "app/types";
+import { FunctionTree } from "classes/FunctionTree";
 
 export const CLEAR:string = "AC";
 export const DIVIDE:string = "/";

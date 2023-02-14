@@ -1,6 +1,6 @@
-import { EQUALS, NUMPAD_BUTTON, OPERATOR_BUTTON, ERROR, CLEAR, INITSTATE } from "../helper/constants";
-import { handleClearAct, handleEqualsAct, handleErrorAct, handleNumPadInputAct, handleOperatorInputAct } from "../helper/functions";
-import { calculatorStateT, actionType } from "./types";
+import { EQUALS, NUMPAD_BUTTON, OPERATOR_BUTTON, ERROR, CLEAR, INITSTATE } from "helper/constants";
+import { handleClearAct, handleEqualsAct, handleErrorAct, handleNumPadInputAct, handleOperatorInputAct } from "helper/functions";
+import { calculatorStateT, actionType } from "app/types";
 
 export const reducer = (state: calculatorStateT = INITSTATE, action: actionType ):calculatorStateT =>  {
   switch(action.type) {

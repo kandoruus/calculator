@@ -1,4 +1,4 @@
-import { FunctionTree } from "../classes/FunctionTree";
+import { FunctionTree } from "classes/FunctionTree";
 
 export type calculatorStateT = {
   func: FunctionTree

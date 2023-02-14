@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action, Store } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-import { reducer } from './reducer';
-import { actionType, calculatorStateT, DispatchType } from './types';
+import { reducer } from 'app/reducer';
+import { actionType, calculatorStateT, DispatchType } from 'app/types';
 
 export const store: Store<calculatorStateT, actionType> & {
   dispatch: DispatchType
