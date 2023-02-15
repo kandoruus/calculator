@@ -1,15 +1,27 @@
 import { calculatorStateT } from "app/types";
-import { BLANK, DECIMAL, EQUALS, INITSTATE, NUMBER_REGEXP, OPERATOR_CHAR, SUBTRACT, ZERO } from "helper/constants";
+import {
+  BLANK,
+  DECIMAL,
+  EQUALS,
+  INITSTATE,
+  NUMBER_REGEXP,
+  OPERATOR_CHAR,
+  SUBTRACT,
+  ZERO,
+} from "helper/constants";
 
-export const handleNumPadInputAct = (state: calculatorStateT, numPadChar: string):calculatorStateT => {
-  if(state.isdisplayingResults && numPadChar === DECIMAL) {
+export const handleNumPadInputAct = (
+  state: calculatorStateT,
+  numPadChar: string
+): calculatorStateT => {
+  if (state.isdisplayingResults && numPadChar === DECIMAL) {
     return {
       ...state,
       display: "0.",
       funcDisplay: BLANK,
       isdisplayingResults: false,
     };
-  } else if(state.isdisplayingResults){
+  } else if (state.isdisplayingResults) {
     return {
       ...state,
       display: numPadChar,
@@ -21,27 +33,28 @@ export const handleNumPadInputAct = (state: calculatorStateT, numPadChar: string
     return {
       ...state,
       funcDisplay: state.funcDisplay.concat(state.nextOp),
-      display: numPadChar === DECIMAL ? "-0." : state.display.concat(numPadChar),
+      display:
+        numPadChar === DECIMAL ? "-0." : state.display.concat(numPadChar),
       nextOp: BLANK,
     };
-  } else if(state.display === ZERO && numPadChar !== DECIMAL) {
+  } else if (state.display === ZERO && numPadChar !== DECIMAL) {
     return {
       ...state,
-      display: numPadChar
+      display: numPadChar,
     };
-  } else if(state.display === "-0" && numPadChar !== DECIMAL) {
+  } else if (state.display === "-0" && numPadChar !== DECIMAL) {
     return {
       ...state,
       display: SUBTRACT.concat(numPadChar),
     };
-  } else if(state.display.includes(".") && numPadChar === DECIMAL) {
+  } else if (state.display.includes(".") && numPadChar === DECIMAL) {
     return state;
-  } else if(OPERATOR_CHAR.test(state.display)) {
+  } else if (OPERATOR_CHAR.test(state.display)) {
     state.func.add(state.display);
     return {
       ...state,
       funcDisplay: state.funcDisplay.concat(state.display),
-      display: numPadChar
+      display: numPadChar,
     };
   } else {
     return {
@@ -49,11 +62,13 @@ export const handleNumPadInputAct = (state: calculatorStateT, numPadChar: string
       display: state.display.concat(numPadChar),
     };
   }
-  
-}
+};
 
-export const handleOperatorInputAct = (state: calculatorStateT, OperationChar: string):calculatorStateT => {
-  if(state.isdisplayingResults) {
+export const handleOperatorInputAct = (
+  state: calculatorStateT,
+  OperationChar: string
+): calculatorStateT => {
+  if (state.isdisplayingResults) {
     state.func.add(state.display);
     return {
       ...state,
@@ -61,8 +76,8 @@ export const handleOperatorInputAct = (state: calculatorStateT, OperationChar: s
       funcDisplay: state.display,
       isdisplayingResults: false,
       nextOp: BLANK,
-    }
-  } else if(NUMBER_REGEXP.test(state.display)) {
+    };
+  } else if (NUMBER_REGEXP.test(state.display)) {
     state.func.add(state.display);
     return {
       ...state,
@@ -70,7 +85,7 @@ export const handleOperatorInputAct = (state: calculatorStateT, OperationChar: s
       display: OperationChar,
       nextOp: BLANK,
     };
-  } else if(OperationChar === SUBTRACT && state.nextOp === BLANK ) {
+  } else if (OperationChar === SUBTRACT && state.nextOp === BLANK) {
     return {
       ...state,
       display: OperationChar,
@@ -83,14 +98,14 @@ export const handleOperatorInputAct = (state: calculatorStateT, OperationChar: s
       nextOp: BLANK,
     };
   }
-}
+};
 
-export const handleClearAct = ():calculatorStateT => {
+export const handleClearAct = (): calculatorStateT => {
   return INITSTATE;
-}
+};
 
-export const handleEqualsAct = (state: calculatorStateT):calculatorStateT => {
-  if(state.isdisplayingResults) {
+export const handleEqualsAct = (state: calculatorStateT): calculatorStateT => {
+  if (state.isdisplayingResults) {
     return state;
   } else {
     state.func.add(state.display);
@@ -103,9 +118,12 @@ export const handleEqualsAct = (state: calculatorStateT):calculatorStateT => {
       isdisplayingResults: true,
     };
   }
-}
+};
 
-export const handleErrorAct = (state: calculatorStateT, errorMessage: string):calculatorStateT => {
+export const handleErrorAct = (
+  state: calculatorStateT,
+  errorMessage: string
+): calculatorStateT => {
   console.error(errorMessage);
   return state;
-}
+};

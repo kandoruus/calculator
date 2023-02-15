@@ -10,6 +10,7 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
+    "plugin:react/jsx-runtime",
     "prettier"
   ],
   "overrides": [],
@@ -19,7 +20,10 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
-  "rules": { "prettier/prettier": "error" },
+  "rules": {
+    "prettier/prettier": "error",
+    "@typescript-eslint/no-non-null-assertion": "off"
+  },
   "settings": {
     "react": {
       "version": "detect"
