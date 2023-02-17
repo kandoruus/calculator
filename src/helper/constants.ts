@@ -1,33 +1,39 @@
 import { calculatorStateT } from "app/types";
 import { FunctionTree } from "classes/FunctionTree";
 
-export const CLEAR:string = "AC";
-export const DIVIDE:string = "/";
-export const MULTIPLY:string = "×";
-export const SUBTRACT:string = "-";
-export const ADD:string = "+";
-export const EQUALS:string = "=";
-export const DECIMAL:string = ".";
-export const ZERO:string = "0";
-export const ONE:string = "1";
-export const TWO:string = "2";
-export const THREE:string = "3";
-export const FOUR:string = "4";
-export const FIVE:string = "5";
-export const SIX:string = "6";
-export const SEVEN:string = "7";
-export const EIGHT:string = "8";
-export const NINE:string = "9";
-export const BLANK:string = "";
-export const DECIMAL_CHAR:RegExp = /^[.\d]$/;
-export const NUMBER_REGEXP:RegExp = /^-?0$|^-?0[.]\d*$|^-?[1-9]\d*$|^-?[1-9]\d*[.]\d*$/;
-export const OPERATOR_CHAR:RegExp = /^[+\-×\/]$/;
+export const CLEAR = "AC";
+export const DIVIDE = "/";
+export const MULTIPLY = "×";
+export const SUBTRACT = "-";
+export const ADD = "+";
+export const EQUALS = "=";
+export const DECIMAL = ".";
+export const ZERO = "0";
+export const ONE = "1";
+export const TWO = "2";
+export const THREE = "3";
+export const FOUR = "4";
+export const FIVE = "5";
+export const SIX = "6";
+export const SEVEN = "7";
+export const EIGHT = "8";
+export const NINE = "9";
+export const BLANK = "";
+export const DECIMAL_CHAR = /^[.\d]$/;
+export const NUMBER_REGEXP =
+  /^-?0$|^-?0[.]\d*$|^-?[1-9]\d*$|^-?[1-9]\d*[.]\d*$/;
+// eslint-disable-next-line no-useless-escape
+export const OPERATOR_CHAR = /^[+\-×\/]$/;
 export const ERROR = "ERROR";
 export const NUMPAD_BUTTON = "NUMPADBUTTON";
 export const OPERATOR_BUTTON = "OPERATORBUTTON";
-export const OPERATOR_ORDER: string[] = [MULTIPLY, DIVIDE, SUBTRACT, ADD,  BLANK];
-
-
+export const OPERATOR_ORDER: string[] = [
+  MULTIPLY,
+  DIVIDE,
+  SUBTRACT,
+  ADD,
+  BLANK,
+];
 
 export const INITSTATE: calculatorStateT = {
   func: new FunctionTree(),
@@ -35,92 +41,92 @@ export const INITSTATE: calculatorStateT = {
   display: ZERO,
   nextOp: BLANK,
   isdisplayingResults: false,
-}
+};
 
-export const buttonProps: { id: string, className: string, value: string }[] = [
+export const buttonProps: { id: string; className: string; value: string }[] = [
   {
     id: "clear",
     className: "row1 col1",
-    value: CLEAR
+    value: CLEAR,
   },
   {
     id: "divide",
     className: "row1 col3",
-    value: DIVIDE
+    value: DIVIDE,
   },
   {
     id: "multiply",
     className: "row1 col4",
-    value: MULTIPLY
+    value: MULTIPLY,
   },
   {
     id: "seven",
     className: "row2 col1 numPad",
-    value: SEVEN
+    value: SEVEN,
   },
   {
     id: "eight",
     className: "row2 col2 numPad",
-    value: EIGHT
+    value: EIGHT,
   },
   {
     id: "nine",
     className: "row2 col3 numPad",
-    value: NINE
+    value: NINE,
   },
   {
     id: "subtract",
     className: "row2 col4",
-    value: SUBTRACT
+    value: SUBTRACT,
   },
   {
     id: "four",
     className: "row3 col1 numPad",
-    value: FOUR
+    value: FOUR,
   },
   {
     id: "five",
     className: "row3 col2 numPad",
-    value: FIVE
+    value: FIVE,
   },
   {
     id: "six",
     className: "row3 col3 numPad",
-    value: SIX
+    value: SIX,
   },
   {
     id: "add",
     className: "row3 col4",
-    value: ADD
+    value: ADD,
   },
   {
     id: "one",
     className: "row4 col1 numPad",
-    value: ONE
+    value: ONE,
   },
   {
     id: "two",
     className: "row4 col2 numPad",
-    value: TWO
+    value: TWO,
   },
   {
     id: "three",
     className: "row4 col3 numPad",
-    value: THREE
+    value: THREE,
   },
   {
     id: "zero",
     className: "row5 col1 numPad",
-    value: ZERO
+    value: ZERO,
   },
   {
     id: "decimal",
     className: "row5 col3 numPad",
-    value: DECIMAL
+    value: DECIMAL,
   },
   {
     id: "equals",
     className: "row4 col4",
-    value: EQUALS
-  }
+    value: EQUALS,
+  },
 ];
