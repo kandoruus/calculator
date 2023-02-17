@@ -1,6 +1,16 @@
-import { ADD, BLANK, DIVIDE, ERROR, MULTIPLY, NUMBER_REGEXP, OPERATOR_CHAR, OPERATOR_ORDER, SUBTRACT, ZERO } from "helper/constants";
+import {
+  ADD,
+  BLANK,
+  DIVIDE,
+  ERROR,
+  MULTIPLY,
+  NUMBER_REGEXP,
+  OPERATOR_CHAR,
+  OPERATOR_ORDER,
+  SUBTRACT,
+  ZERO,
+} from "helper/constants";
 import { FunctionNode } from "classes/FunctionNode";
-
 
 export class FunctionTree {
   private startNode: FunctionNode;
@@ -17,7 +27,7 @@ export class FunctionTree {
     this.add = this.add.bind(this);
   }
 
-  private isOpInOrder (op: string, node: FunctionNode) {
+  private isOpInOrder(op: string, node: FunctionNode) {
     return OPERATOR_ORDER.indexOf(op) <= OPERATOR_ORDER.indexOf(node.value);
   }
 
@@ -30,7 +40,7 @@ export class FunctionTree {
   }
 
   private addNumberToTree(num: string, node: FunctionNode) {
-    if(!node.leftChild) {
+    if (!node.leftChild) {
       node.leftChild = new FunctionNode(num);
     } else {
       node.rightChild = new FunctionNode(num);
@@ -38,13 +48,17 @@ export class FunctionTree {
     }
   }
 
-  private addOperatorToTree(op: string, parentNode: FunctionNode, node: FunctionNode) {
-    if(node.value === BLANK) {
+  private addOperatorToTree(
+    op: string,
+    parentNode: FunctionNode,
+    node: FunctionNode
+  ) {
+    if (node.value === BLANK) {
       node.value = op;
-    } else if(this.isOpInOrder(op, parentNode)){
+    } else if (this.isOpInOrder(op, parentNode)) {
       parentNode.rightChild = new FunctionNode(op, node);
       this.endNode = parentNode.rightChild;
-    } else if(parentNode.parent) {
+    } else if (parentNode.parent) {
       this.addOperatorToTree(op, parentNode.parent, parentNode);
     } else {
       console.error("Node is orphaned: " + parentNode);
@@ -52,9 +66,9 @@ export class FunctionTree {
   }
 
   add(value: string) {
-    if(this.isNumber(value)) {
+    if (this.isNumber(value)) {
       this.addNumberToTree(value, this.endNode);
-    } else if(this.isOperator(value) && this.endNode.parent) {
+    } else if (this.isOperator(value) && this.endNode.parent) {
       this.addOperatorToTree(value, this.endNode.parent, this.endNode);
     } else {
       console.error("Invalid input to function tree: " + value);
@@ -62,17 +76,17 @@ export class FunctionTree {
   }
 
   private mathOnStrings(op: string, a: string, b: string): string {
-    if(a === ERROR || b === ERROR) {
+    if (a === ERROR || b === ERROR) {
       return ERROR;
-    } else if(op === ADD) {
+    } else if (op === ADD) {
       return (parseFloat(a) + parseFloat(b)).toString();
-    } else if(op === SUBTRACT) {
+    } else if (op === SUBTRACT) {
       return (parseFloat(a) - parseFloat(b)).toString();
-    } else if(op === MULTIPLY) {
+    } else if (op === MULTIPLY) {
       return (parseFloat(a) * parseFloat(b)).toString();
-    } else if(op === DIVIDE) {
+    } else if (op === DIVIDE) {
       return b === ZERO ? ERROR : (parseFloat(a) / parseFloat(b)).toString();
-    } else if(op === BLANK) {
+    } else if (op === BLANK) {
       return a;
     } else {
       return ERROR;
@@ -80,11 +94,15 @@ export class FunctionTree {
   }
 
   private recursiveEval(node: FunctionNode): string {
-    if(NUMBER_REGEXP.test(node.value)) {
+    if (NUMBER_REGEXP.test(node.value)) {
       return node.value;
-    } else if(node.leftChild && node.rightChild) {
-      return this.mathOnStrings(node.value, this.recursiveEval(node.leftChild), this.recursiveEval(node.rightChild));
-    } else if(node.leftChild) {
+    } else if (node.leftChild && node.rightChild) {
+      return this.mathOnStrings(
+        node.value,
+        this.recursiveEval(node.leftChild),
+        this.recursiveEval(node.rightChild)
+      );
+    } else if (node.leftChild) {
       return this.recursiveEval(node.leftChild);
     } else {
       console.error(node);
@@ -93,7 +111,9 @@ export class FunctionTree {
   }
 
   evaluate(): string {
-    return this.startNode.rightChild ? this.recursiveEval(this.startNode.rightChild) : ERROR;
+    return this.startNode.rightChild
+      ? this.recursiveEval(this.startNode.rightChild)
+      : ERROR;
   }
 
   clear(): FunctionTree {

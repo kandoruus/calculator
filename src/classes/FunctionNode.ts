@@ -6,29 +6,33 @@ export class FunctionNode {
   private _leftChild: FunctionNode | null;
   private _rightChild: FunctionNode | null;
 
-  constructor(initValue?: string, initLeftChild?: FunctionNode, initRightChild?: FunctionNode) {
+  constructor(
+    initValue?: string,
+    initLeftChild?: FunctionNode,
+    initRightChild?: FunctionNode
+  ) {
     this._parent = null;
-    this.value = initValue ?  initValue : BLANK;
+    this.value = initValue ? initValue : BLANK;
     this._leftChild = initLeftChild ? this.addChild(initLeftChild) : null;
     this._rightChild = initRightChild ? this.addChild(initRightChild) : null;
     this.addChild = this.addChild.bind(this);
   }
 
   private addChild(newChild: FunctionNode | null): FunctionNode | null {
-    if(newChild) newChild.parent = this;
+    if (newChild) newChild.parent = this;
     return newChild;
   }
 
-  get parent():FunctionNode | null {
+  get parent(): FunctionNode | null {
     return this._parent;
   }
-  
+
   private set parent(newParent: FunctionNode | null) {
     this._parent = newParent;
   }
 
   set leftChild(newChild: FunctionNode | null) {
-    if(newChild) newChild.parent = this;
+    if (newChild) newChild.parent = this;
     this._leftChild = newChild;
   }
 
@@ -37,12 +41,11 @@ export class FunctionNode {
   }
 
   set rightChild(newChild: FunctionNode | null) {
-    if(newChild) newChild.parent = this;
+    if (newChild) newChild.parent = this;
     this._rightChild = newChild;
   }
 
   get rightChild(): FunctionNode | null {
     return this._rightChild;
   }
-
 }
