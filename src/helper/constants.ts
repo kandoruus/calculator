@@ -22,8 +22,7 @@ export const BLANK = "";
 export const DECIMAL_CHAR = /^[.\d]$/;
 export const NUMBER_REGEXP =
   /^-?0$|^-?0[.]\d*$|^-?[1-9]\d*$|^-?[1-9]\d*[.]\d*$/;
-// eslint-disable-next-line no-useless-escape
-export const OPERATOR_CHAR = /^[+\-×\/]$/;
+export const OPERATOR_CHAR = /^[+\-×/]$/;
 export const ERROR = "ERROR";
 export const NUMPAD_BUTTON = "NUMPADBUTTON";
 export const OPERATOR_BUTTON = "OPERATORBUTTON";
